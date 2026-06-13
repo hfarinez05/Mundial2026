@@ -1,13 +1,14 @@
-//import { importarFixture } from "../scripts/importFixture";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { db } from "../firebase";
 import {
   collection,
   addDoc,
+  getDocs,
   updateDoc,
   deleteDoc,
   doc,
 } from "firebase/firestore";
+import PartidoAdmin from "./partidoAdmin";
 import "../styles/admin.css";
 
 const EQUIPOS = [
@@ -66,6 +67,70 @@ export default function Admin({ usuarios, setUsuarios }) {
   const [nombre, setNombre] = useState("");
   const [loading] = useState(false);
   const [error, setError] = useState(null);
+  const [desbloqueado, setDesbloqueado] = useState(false);
+  const [clave, setClave] = useState("");
+  const [partidosHoy, setPartidosHoy] = useState([]);
+
+  useEffect(() => {
+    const cargarPartidos = async () => {
+      const snap = await getDocs(collection(db, "fixture"));
+      const todos = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+
+      const hoy = new Date();
+      const hoyStr = hoy
+        .toLocaleDateString("es-CL", {
+          timeZone: "America/Santiago",
+          year: "numeric",
+          month: "2-digit",
+          day: "2-digit",
+        })
+        .split("-")
+        .reverse()
+        .join("-");
+
+      const filtrados = todos
+        .filter((p) => {
+          const fechaLocal = new Date(p.fecha)
+            .toLocaleDateString("es-CL", {
+              timeZone: "America/Santiago",
+              year: "numeric",
+              month: "2-digit",
+              day: "2-digit",
+            })
+            .split("-")
+            .reverse()
+            .join("-");
+          return fechaLocal === hoyStr;
+        })
+        .sort((a, b) => new Date(a.fecha) - new Date(b.fecha));
+
+      setPartidosHoy(filtrados);
+    };
+    cargarPartidos();
+  }, []);
+
+  const actualizarPartido = (id, golesLocal, golesVisitante) => {
+    setPartidosHoy((prev) =>
+      prev.map((p) =>
+        p.id === id
+          ? {
+              ...p,
+              local: { ...p.local, goles: golesLocal },
+              visitante: { ...p.visitante, goles: golesVisitante },
+            }
+          : p,
+      ),
+    );
+  };
+
+  const verificar = () => {
+    if (clave === import.meta.env.VITE_ADMIN_CLAVE) {
+      setDesbloqueado(true);
+    } else {
+      alert("Clave incorrecta");
+      setClave("");
+    }
+  };
 
   const agregarUsuario = async () => {
     if (!nombre.trim()) return;
@@ -116,11 +181,64 @@ export default function Admin({ usuarios, setUsuarios }) {
     }
   };
 
+  if (!desbloqueado) {
+    return (
+      <div style={{ padding: "40px", textAlign: "center" }}>
+        <h3>🔒 Panel Admin</h3>
+        <input
+          type="password"
+          placeholder="Ingresá la clave"
+          value={clave}
+          onChange={(e) => setClave(e.target.value)}
+          onKeyDown={(e) => e.key === "Enter" && verificar()}
+          style={{
+            padding: "10px",
+            borderRadius: "8px",
+            border: "1px solid #ccc",
+            display: "block",
+            margin: "10px auto",
+          }}
+        />
+        <button
+          onClick={verificar}
+          style={{
+            background: "#1a472a",
+            color: "white",
+            border: "none",
+            padding: "10px 20px",
+            borderRadius: "8px",
+            cursor: "pointer",
+          }}
+        >
+          Entrar
+        </button>
+      </div>
+    );
+  }
+
   return (
     <div className="admin-container">
-      {/* <button className="btn-importar" onClick={importarFixture}>
-        ⬇️ Importar Fixture del Mundial
-      </button> */}
+      <h3>PARTIDOS DE HOY</h3>
+      {partidosHoy.length === 0 ? (
+        <p style={{ color: "#888", fontSize: "13px" }}>No hay partidos hoy.</p>
+      ) : (
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: "10px",
+            marginBottom: "24px",
+          }}
+        >
+          {partidosHoy.map((p) => (
+            <PartidoAdmin
+              key={p.id}
+              partido={p}
+              onActualizar={actualizarPartido}
+            />
+          ))}
+        </div>
+      )}
 
       <div className="admin-form">
         <input

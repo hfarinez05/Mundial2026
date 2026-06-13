@@ -28,6 +28,7 @@ export default function App() {
   };
   const pagados = usuarios.filter((u) => u.pagado).length;
   const pote = pagados * 5000;
+  const selectorBloqueado = tab === "chat";
 
   // Compañeros con el mismo equipo
   const companeros = usuarioActual
@@ -76,16 +77,17 @@ export default function App() {
       </header>
 
       {/* Selector de usuario */}
+      {/* Selector de usuario */}
       <div className="user-select" style={{ position: "relative" }}>
         <label htmlFor="nombre">Soy:</label>
         <div
-          onClick={() => setMostrarLista(!mostrarLista)}
+          onClick={() => !selectorBloqueado && setMostrarLista(!mostrarLista)}
           style={{
             padding: "8px 14px",
             border: "1px solid #ccc",
             borderRadius: "6px",
-            background: "white",
-            cursor: "pointer",
+            background: selectorBloqueado ? "#f0f0f0" : "white",
+            cursor: selectorBloqueado ? "not-allowed" : "pointer",
             minWidth: "180px",
             display: "flex",
             justifyContent: "space-between",
@@ -96,10 +98,14 @@ export default function App() {
           <span>
             {usuarioActual ? usuarioActual.nombre : "Elegí tu nombre..."}
           </span>
-          <span>{mostrarLista ? "▲" : "▼"}</span>
+          {selectorBloqueado ? (
+            <span>🔒</span>
+          ) : (
+            <span>{mostrarLista ? "▲" : "▼"}</span>
+          )}
         </div>
 
-        {mostrarLista && (
+        {mostrarLista && !selectorBloqueado && (
           <ul
             style={{
               position: "absolute",
