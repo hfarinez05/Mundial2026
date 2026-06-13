@@ -1,0 +1,146 @@
+.admin-container {
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 20px;
+}
+
+/* Botón importar */
+.btn-importar {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 16px;
+  background: #1a472a;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+  text-align: center;
+}
+.btn-importar:hover {
+  background: #145222;
+}
+
+/* Formulario agregar */
+.admin-form {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+.admin-form input {
+  flex: 1;
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  font-size: 14px;
+}
+.admin-form button {
+  background: #ffd700;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-weight: bold;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.admin-form button:hover {
+  background: #f0c800;
+}
+
+/* Título */
+.admin-container h3 {
+  font-size: 12px;
+  letter-spacing: 1.5px;
+  color: #999;
+  margin-bottom: 12px;
+}
+
+/* Lista */
+.admin-list {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Card de cada usuario */
+.admin-item {
+  background: white;
+  border-radius: 12px;
+  padding: 14px 16px;
+  border-left: 5px solid #ffd700;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Fila superior: nombre + acciones */
+.admin-item-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.admin-nombre {
+  font-size: 15px;
+  color: #222;
+}
+.admin-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.btn-pago {
+  background: #1a8c3e;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 12px;
+  font-size: 13px;
+  cursor: pointer;
+}
+.btn-pago:hover {
+  background: #146b30;
+}
+.btn-borrar {
+  background: #f5f5f5;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 10px;
+  cursor: pointer;
+  font-size: 14px;
+}
+.btn-borrar:hover {
+  background: #ffe0e0;
+}
+.badge-pagado {
+  font-size: 13px;
+  color: #1a8c3e;
+}
+
+/* Fila inferior: selector de equipo */
+.admin-item-bottom {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.label-equipo {
+  font-size: 12px;
+  color: #999;
+  white-space: nowrap;
+}
+.select-equipo {
+  flex: 1;
+  padding: 7px 10px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  font-size: 13px;
+  background: #fafafa;
+  cursor: pointer;
+}
+.select-equipo:focus {
+  outline: none;
+  border-color: #ffd700;
+}

@@ -1,0 +1,131 @@
+/* Contenedor central */
+.app-container {
+  max-width: 600px; /* ancho fijo para centrar */
+  margin: 0 auto; /* centra horizontalmente */
+  background: #f5f5f5;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+}
+
+/* Centrar el bloque "Soy: elige tu nombre" */
+.user-select {
+  margin: 20px auto;
+  display: flex;
+  justify-content: center; /* centra horizontalmente */
+  align-items: center; /* alinea label e input en la misma línea */
+  gap: 10px; /* espacio entre label e input */
+}
+
+/* Banner superior */
+header {
+  background: #228b22; /* verde */
+  color: #ffd700; /* dorado */
+  text-align: center;
+  padding: 20px;
+  font-weight: bold;
+  font-size: 1.2rem;
+  border-bottom: 4px solid #ffd700;
+}
+
+/* Selector de usuario */
+.user-select {
+  margin: 15px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.user-select input {
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+/* Tabs */
+nav {
+  display: flex;
+  justify-content: space-around;
+  background: #006400;
+  padding: 10px;
+}
+
+nav button {
+  flex: 1;
+  margin: 0 5px;
+  padding: 10px;
+  background: #ffd700;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+nav button:hover {
+  background: #ffcc00;
+}
+
+/* Ranking */
+main {
+  padding: 20px;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+li .flag {
+  font-size: 1.5rem;
+  margin-right: 8px;
+}
+
+.ranking-item {
+  background: #fff;
+  margin: 10px 0;
+  padding: 12px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-left: 6px solid #ffd700;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.ranking-item button {
+  background: #228b22;
+  color: #fff;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.ranking-item button:hover {
+  background: #006400;
+}
+
+li button:hover {
+  background: #006400;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .app-container {
+    max-width: 95%;
+  }
+
+  nav {
+    flex-direction: column;
+  }
+
+  nav button {
+    margin: 5px 0;
+    width: 100%;
+  }
+
+  .ranking-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
