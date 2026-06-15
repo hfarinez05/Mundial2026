@@ -48,7 +48,7 @@ export default function MiGrupo({ usuario }) {
     };
 
     cargar();
-  }, [usuario?.id]);
+  }, [usuario]);
 
   // Sin usuario seleccionado
   if (!usuario) {
