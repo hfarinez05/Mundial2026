@@ -14,23 +14,41 @@ export default function MiGrupo({ usuario }) {
       const snapshot = await getDocs(collection(db, "fixture"));
       const todos = snapshot.docs.map((d) => ({ id: d.id, ...d.data() }));
 
-      // Filtrar partidos donde juega el equipo del usuario
       const misPartidos = todos.filter(
         (p) =>
           p.local.nombre === usuario.pais ||
           p.visitante.nombre === usuario.pais,
       );
 
-      // Ordenar por fecha
-      misPartidos.sort((a, b) => new Date(a.fecha) - new Date(b.fecha));
+      // ✅ Deduplicación
+      const vistos = new Set();
+      const misPartidosSinDuplicados = misPartidos.filter((p) => {
+        console.log(
+          "Partidos encontrados:",
+          misPartidos.map((p) => ({
+            id: p.id,
+            local: p.local.nombre,
+            visitante: p.visitante.nombre,
+            fecha: p.fecha,
+          })),
+        );
+        const clave =
+          [p.local.nombre, p.visitante.nombre].sort().join("_") + p.fecha;
+        if (vistos.has(clave)) return false;
+        vistos.add(clave);
+        return true;
+      });
 
-      setPartidos(misPartidos);
-      setLoading(false);
+      // ✅ Ordenar y guardar
+      misPartidosSinDuplicados.sort(
+        (a, b) => new Date(a.fecha) - new Date(b.fecha),
+      );
+      setPartidos(misPartidosSinDuplicados);
       setLoading(false);
     };
 
     cargar();
-  }, [usuario]);
+  }, [usuario?.id]);
 
   // Sin usuario seleccionado
   if (!usuario) {

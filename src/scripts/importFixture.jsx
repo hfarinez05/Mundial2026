@@ -588,7 +588,7 @@ const PARTIDOS = [
     grupo: "Grupo F",
     jornada: "Fase de Grupos",
     local: "Japón",
-    visitante: "Países Bajos",
+    visitante: "Suecia",
     estadio: "AT&T Stadium",
     ciudad: "Arlington",
   },
@@ -598,9 +598,9 @@ const PARTIDOS = [
     grupo: "Grupo F",
     jornada: "Fase de Grupos",
     local: "Túnez",
-    visitante: "Suecia",
-    estadio: "BMO Field",
-    ciudad: "Toronto",
+    visitante: "Países Bajos",
+    estadio: "Arrowhead Stadium",
+    ciudad: "Kansas City",
   },
   {
     id: 61,
@@ -627,17 +627,17 @@ const PARTIDOS = [
     fecha: "2026-06-28T01:00:00Z",
     grupo: "Grupo H",
     jornada: "Fase de Grupos",
-    local: "Cabo Verde",
+    local: "Uruguay",
     visitante: "España",
-    estadio: "Gillette Stadium",
-    ciudad: "Foxborough",
+    estadio: "Estadio Akron",
+    ciudad: "Guadalajara",
   },
   {
     id: 64,
     fecha: "2026-06-28T01:00:00Z",
     grupo: "Grupo H",
     jornada: "Fase de Grupos",
-    local: "Uruguay",
+    local: "Cabo Verde",
     visitante: "Arabia Saudita",
     estadio: "Lincoln Financial Field",
     ciudad: "Filadelfia",
@@ -1051,7 +1051,6 @@ const PARTIDOS = [
 
 export async function importarFixture() {
   console.log("🚀 Iniciando importación con datos locales...");
-
   try {
     for (const partido of PARTIDOS) {
       await setDoc(doc(db, "fixture", String(partido.id)), {
@@ -1065,7 +1064,6 @@ export async function importarFixture() {
         ciudad: partido.ciudad,
       });
     }
-
     alert(`✅ ${PARTIDOS.length} partidos importados correctamente`);
     console.log("✅ Hecho");
   } catch (e) {

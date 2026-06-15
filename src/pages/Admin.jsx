@@ -1,3 +1,4 @@
+import { importarFixture } from "../scripts/importFixture";
 import { useState, useEffect } from "react";
 import { db } from "../firebase";
 import {
@@ -218,6 +219,11 @@ export default function Admin({ usuarios, setUsuarios }) {
 
   return (
     <div className="admin-container">
+      <div style={{ display: "flex", gap: "10px", marginBottom: "16px" }}>
+        <button className="btn-importar" onClick={importarFixture}>
+          ⬇️ Reimportar Fixture
+        </button>
+      </div>
       <h3>PARTIDOS DE HOY</h3>
       {partidosHoy.length === 0 ? (
         <p style={{ color: "#888", fontSize: "13px" }}>No hay partidos hoy.</p>
